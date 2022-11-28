@@ -1,8 +1,8 @@
 module Main exposing (..)
 
+import Accessibility exposing (..)
 import Browser
-import Html exposing (..)
-import Html.Attributes exposing (alt, height, href, src, width)
+import Html.Attributes exposing (class, classList, height, src, type_, width)
 import Html.Events exposing (onClick)
 
 
@@ -22,7 +22,7 @@ main =
 
 init : () -> ( Model, Cmd Msg )
 init flags =
-    ( { status = Ready }, Cmd.none )
+    ( { side = Light }, Cmd.none )
 
 
 
@@ -30,16 +30,16 @@ init flags =
 
 
 type alias Model =
-    { status : Status }
+    { side : Side }
 
 
-type Status
-    = Ready
-    | NotReady
+type Side
+    = Light
+    | Dark
 
 
 type Msg
-    = NoOp
+    = ToggledBackground
 
 
 
@@ -49,8 +49,17 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
+        ToggledBackground ->
+            ( { model | side = toggleSide model.side }, Cmd.none )
+
+
+toggleSide : Side -> Side
+toggleSide side =
+    if side == Dark then
+        Light
+
+    else
+        Dark
 
 
 
@@ -59,18 +68,37 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div
+        [ class "container"
+        , classList
+            [ ( "light", isLight model.side )
+            , ( "dark", isDark model.side )
+            ]
+        ]
         [ h1 [] [ text "Elm" ]
         , p []
             [ text "A delightful language for reliable web applications." ]
-        , img
+        , img "Elm language logo"
             [ src "assets/elm-logo.png"
             , height 256
             , width 256
-            , alt "Elm language logo"
             ]
-            []
+        , button
+            [ onClick ToggledBackground
+            , type_ "button"
+            ]
+            [ text "Toggle Background" ]
         ]
+
+
+isDark : Side -> Bool
+isDark side =
+    side == Dark
+
+
+isLight : Side -> Bool
+isLight side =
+    side == Light
 
 
 
