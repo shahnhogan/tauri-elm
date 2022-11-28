@@ -1,0 +1,21 @@
+{
+  "name": "tauri-elm",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "tauri:dev": "tauri dev",
+    "tauri:prod": "tauri build",
+    "live": "elm-live --port 4000 ./src/Main.elm --dir ./public",
+    "watch": "elm-watch hot",
+    "serve": "serve -l 4000 public"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.1.0",
+    "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
+    "elm-live": "^4.0.2",
+    "elm-watch": "^1.1.0",
+    "serve": "^14.1.2"
+  }
+}
