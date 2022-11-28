@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "tauri:dev": "tauri dev",
-    "tauri:prod": "tauri build",
+    "tauri": "tauri",
     "live": "elm-live --port 4000 ./src/Main.elm --dir ./public",
     "watch": "elm-watch hot",
     "serve": "serve -l 4000 public"
