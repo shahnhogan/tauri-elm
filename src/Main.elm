@@ -87,8 +87,18 @@ view model =
             [ onClick ToggledBackground
             , type_ "button"
             ]
-            [ text "Toggle Background" ]
+            [ "Toggle " ++ (model.side |> toggleSide |> sideToLabel) |> text ]
         ]
+
+
+sideToLabel : Side -> String
+sideToLabel side =
+    case side of
+        Light ->
+            "light side"
+
+        Dark ->
+            "dark side"
 
 
 isDark : Side -> Bool
