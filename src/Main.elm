@@ -22,7 +22,7 @@ main =
 
 init : () -> ( Model, Cmd Msg )
 init flags =
-    ( { side = Light }, Cmd.none )
+    ( { force = Light }, Cmd.none )
 
 
 
@@ -30,10 +30,10 @@ init flags =
 
 
 type alias Model =
-    { side : Side }
+    { force : Force }
 
 
-type Side
+type Force
     = Light
     | Dark
 
@@ -50,12 +50,12 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ToggledBackground ->
-            ( { model | side = toggleSide model.side }, Cmd.none )
+            ( { model | force = toggleForce model.force }, Cmd.none )
 
 
-toggleSide : Side -> Side
-toggleSide side =
-    if side == Dark then
+toggleForce : Force -> Force
+toggleForce force =
+    if force == Dark then
         Light
 
     else
@@ -71,8 +71,8 @@ view model =
     div
         [ class "container"
         , classList
-            [ ( "light", isLight model.side )
-            , ( "dark", isDark model.side )
+            [ ( "light", isLight model.force )
+            , ( "dark", isDark model.force )
             ]
         ]
         [ h1 [] [ text "Elm" ]
@@ -87,13 +87,13 @@ view model =
             [ onClick ToggledBackground
             , type_ "button"
             ]
-            [ "Toggle " ++ (model.side |> toggleSide |> sideToLabel) |> text ]
+            [ "Toggle " ++ (model.force |> toggleForce |> forceToLabel) |> text ]
         ]
 
 
-sideToLabel : Side -> String
-sideToLabel side =
-    case side of
+forceToLabel : Force -> String
+forceToLabel force =
+    case force of
         Light ->
             "light side"
 
@@ -101,14 +101,14 @@ sideToLabel side =
             "dark side"
 
 
-isDark : Side -> Bool
-isDark side =
-    side == Dark
+isDark : Force -> Bool
+isDark force =
+    force == Dark
 
 
-isLight : Side -> Bool
-isLight side =
-    side == Light
+isLight : Force -> Bool
+isLight force =
+    force == Light
 
 
 
